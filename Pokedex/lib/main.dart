@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(
@@ -9,9 +10,12 @@ void main() {
             child: Text('Pokedex'),
           ),
           backgroundColor: Color(0xFFD53B47),
+          systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarColor: Color(0xFFD53B47),
+          ),
         ),
+        backgroundColor: Colors.white,
       ),
     )
   );
 }
-
