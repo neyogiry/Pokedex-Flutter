@@ -11,19 +11,28 @@ class PokedexApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Center(
-            child: Text('Pokedex'),
-          ),
-          backgroundColor: Color(0xFFD53B47),
-          systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: Color(0xFFD53B47),
-          ),
-        ),
-        backgroundColor: Colors.white,
-      ),
+      home: MyHomePage()
     );
   }
 }
 
+class MyHomePage extends StatelessWidget {
+  MyHomePage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Center(
+          child: Text('Pokedex'),
+        ),
+        backgroundColor: Color(0xFFD53B47),
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarColor: Color(0xFFD53B47),
+        ),
+      ),
+      body: Container(),
+      backgroundColor: Colors.white,
+    );
+  }
+}
