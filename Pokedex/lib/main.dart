@@ -11,13 +11,15 @@ class PokedexApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: MyHomePage()
+        home: MyHomePage()
     );
   }
 }
 
 class MyHomePage extends StatelessWidget {
   MyHomePage({Key? key}) : super(key: key);
+
+  final items = List<String>.generate(150, (index) => "Pokemon #${index+1}");
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,14 @@ class MyHomePage extends StatelessWidget {
           statusBarColor: Color(0xFFD53B47),
         ),
       ),
-      body: Container(),
+      body: ListView.builder(
+          itemCount: items.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: Text(items[index]),
+            );
+          }
+      ),
       backgroundColor: Colors.white,
     );
   }
