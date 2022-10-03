@@ -49,11 +49,13 @@ class _PokemonListPageState extends State<PokemonListPage> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           List<Pokemon> list = snapshot.data as List<Pokemon>;
-          return ListView.builder(
-              itemCount: list.length,
-              itemBuilder: (context, index) {
-                return PokemonItem(name: list[index].name);
-              });
+          return GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+            ),
+            itemBuilder: (context, index) => PokemonItem(name: list[index].name),
+            itemCount: list.length,
+          );
         } else if (snapshot.hasError) {
           return Text("${snapshot.error}");
         }
@@ -79,6 +81,7 @@ class PokemonItem extends StatelessWidget {
       ],
     );
   }
+
 }
 
 Future<List<Pokemon>> fetchData() async {
