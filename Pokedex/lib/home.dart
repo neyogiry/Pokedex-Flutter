@@ -53,7 +53,7 @@ class _PokemonListPageState extends State<PokemonListPage> {
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
             ),
-            itemBuilder: (context, index) => PokemonItem(name: list[index].name),
+            itemBuilder: (context, index) => PokemonItem(name: list[index].name, url: list[index].url,),
             itemCount: list.length,
           );
         } else if (snapshot.hasError) {
@@ -67,26 +67,33 @@ class _PokemonListPageState extends State<PokemonListPage> {
 }
 
 class PokemonItem extends StatelessWidget {
-  const PokemonItem({Key? key, required this.name}) : super(key: key);
+  const PokemonItem({Key? key, required this.name, required this.url}) : super(key: key);
   final String name;
+  final String url;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(10),
-          child: Text(name),
-        )
+        Expanded(
+            child: Image.network(pokemonImageUrl(url))
+        ),
+        Text(name),
       ],
     );
+  }
+
+  pokemonImageUrl(String url) {
+    List<String> splitted = url.split("/");
+    splitted.removeLast();
+    int index = int.parse(splitted.last);
+    return "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/$index.png";
   }
 
 }
 
 Future<List<Pokemon>> fetchData() async {
-  final response =
-      await http.get(Uri.parse("https://pokeapi.co/api/v2/pokemon"));
+  final response = await http.get(Uri.parse("https://pokeapi.co/api/v2/pokemon"));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
