@@ -50,8 +50,11 @@ class _PokemonListPageState extends State<PokemonListPage> {
         if (snapshot.hasData) {
           List<Pokemon> list = snapshot.data as List<Pokemon>;
           return GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            padding: const EdgeInsets.all(10),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
             ),
             itemBuilder: (context, index) => PokemonItem(name: list[index].name, url: list[index].url,),
             itemCount: list.length,
