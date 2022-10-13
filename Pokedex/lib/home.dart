@@ -76,13 +76,19 @@ class PokemonItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-            child: Image.network(pokemonImageUrl(url))
-        ),
-        Text(name),
-      ],
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey, width: 1),
+        borderRadius: const BorderRadius.all(Radius.circular(10))
+      ),
+      child: Column(
+        children: [
+          Expanded(
+              child: Image.network(pokemonImageUrl(url))
+          ),
+          Text(name),
+        ],
+      ),
     );
   }
 
