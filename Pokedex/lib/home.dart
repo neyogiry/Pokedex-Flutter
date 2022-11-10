@@ -4,6 +4,7 @@ import 'package:app/pokemon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:palette_generator/palette_generator.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
@@ -69,24 +70,57 @@ class _PokemonListPageState extends State<PokemonListPage> {
   }
 }
 
-class PokemonItem extends StatelessWidget {
+class PokemonItem extends StatefulWidget {
   const PokemonItem({Key? key, required this.name, required this.url}) : super(key: key);
   final String name;
   final String url;
 
   @override
+  State<PokemonItem> createState() => _PokemonItemState();
+}
+
+class _PokemonItemState extends State<PokemonItem> {
+  Color backgroundColor = Colors.transparent;
+  late Image image;
+
+
+  @override
+  void initState() {
+    super.initState();
+    _loadImage();
+    _updatePaletteGenerator();
+  }
+
+  _loadImage() async {
+    image = Image.network(pokemonImageUrl(widget.url));
+  }
+
+  _updatePaletteGenerator() async {
+    PaletteGenerator paletteGenerator = await PaletteGenerator.fromImageProvider(
+        image.image,
+        size: const Size(100, 100)
+    );
+    setState(() {
+      backgroundColor = paletteGenerator.dominantColor?.color ?? Colors.transparent;
+    });
+  }
+
+
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
+        color: backgroundColor,
         border: Border.all(color: Colors.grey, width: 1),
         borderRadius: const BorderRadius.all(Radius.circular(10))
       ),
       child: Column(
         children: [
           Expanded(
-              child: Image.network(pokemonImageUrl(url))
+              child: Image(image: image.image)
           ),
-          Text(name),
+          Text(widget.name),
         ],
       ),
     );
