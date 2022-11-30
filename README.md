@@ -7,6 +7,10 @@
 <p align="center">
   This repository contains a Flutter project to help you learn about multi-platform development.
 
+<p align="center">
+<img src="/readme/pokedex_ios_main.png" width="320"/>
+</p>
+
 ### Status: 🚧 In progress
 Pokedex is still in under development, and some features are not yet implemented.
 
