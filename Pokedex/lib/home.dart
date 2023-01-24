@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:palette_generator/palette_generator.dart';
+import '../util/constants.dart' as constants;
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
@@ -136,7 +137,7 @@ class _PokemonItemState extends State<PokemonItem> {
 }
 
 Future<List<Pokemon>> fetchData() async {
-  final response = await http.get(Uri.parse("https://pokeapi.co/api/v2/pokemon"));
+  final response = await http.get(Uri.parse(constants.baseUrl));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
