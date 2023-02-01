@@ -1,2 +1,3 @@
 
-const String baseUrl = "https://pokeapi.co/api/v2/pokemon";
+const String baseUrl = "https://pokeapi.co/api/v2";
+const String pokedexEndpoint = "/pokemon";

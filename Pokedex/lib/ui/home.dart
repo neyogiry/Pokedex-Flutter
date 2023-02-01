@@ -1,11 +1,8 @@
-import 'dart:convert';
-
-import 'package:app/pokemon.dart';
+import 'package:app/data/pokedex_repository.dart';
+import 'package:app/domain/model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
 import 'package:palette_generator/palette_generator.dart';
-import '../util/constants.dart' as constants;
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
@@ -37,20 +34,24 @@ class PokemonListPage extends StatefulWidget {
 
 class _PokemonListPageState extends State<PokemonListPage> {
   late Future<List<Pokemon>> pokemonList;
+  late Future<Pokedex> response;
 
   @override
   void initState() {
     super.initState();
-    pokemonList = fetchData();
+    response = fetchData();
   }
+
+  fetchData() => PokedexRepository().all();
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Pokemon>>(
-      future: pokemonList,
+    return FutureBuilder<Pokedex>(
+      future: response,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          List<Pokemon> list = snapshot.data as List<Pokemon>;
+          Pokedex response = snapshot.data as Pokedex;
+          List<Pokemon> list = response.results;
           return GridView.builder(
             padding: const EdgeInsets.all(10),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -106,8 +107,6 @@ class _PokemonItemState extends State<PokemonItem> {
     });
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -134,20 +133,4 @@ class _PokemonItemState extends State<PokemonItem> {
     return "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/$index.png";
   }
 
-}
-
-Future<List<Pokemon>> fetchData() async {
-  final response = await http.get(Uri.parse(constants.baseUrl));
-
-  if (response.statusCode == 200) {
-    // If the server did return a 200 OK response,
-    // then parse the JSON.
-    return (json.decode(response.body)['results'] as List)
-        .map((e) => Pokemon.fromJson(e))
-        .toList();
-  } else {
-    // If the server did not return a 200 OK response,
-    // then throw an exception.
-    throw Exception('Failed to load pokedex');
-  }
 }
