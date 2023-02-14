@@ -1,5 +1,6 @@
 import 'package:app/data/pokedex_repository.dart';
 import 'package:app/domain/model.dart';
+import 'package:app/util/image_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:palette_generator/palette_generator.dart';
@@ -94,7 +95,7 @@ class _PokemonItemState extends State<PokemonItem> {
   }
 
   _loadImage() async {
-    image = Image.network(pokemonImageUrl(widget.url));
+    image = Image.network(ImageHelper.pokemonImageUrl(widget.url));
   }
 
   _updatePaletteGenerator() async {
@@ -124,13 +125,6 @@ class _PokemonItemState extends State<PokemonItem> {
         ],
       ),
     );
-  }
-
-  pokemonImageUrl(String url) {
-    List<String> splitted = url.split("/");
-    splitted.removeLast();
-    int index = int.parse(splitted.last);
-    return "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/$index.png";
   }
 
 }
