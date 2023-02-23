@@ -1,5 +1,6 @@
 import 'package:app/data/pokedex_repository.dart';
 import 'package:app/domain/model.dart';
+import 'package:app/ui/detail.dart';
 import 'package:app/util/image_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -110,20 +111,30 @@ class _PokemonItemState extends State<PokemonItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        border: Border.all(color: Colors.grey, width: 1),
-        borderRadius: const BorderRadius.all(Radius.circular(10))
+    return GestureDetector(
+      child: Container(
+        decoration: BoxDecoration(
+          color: backgroundColor,
+          border: Border.all(color: Colors.grey, width: 1),
+          borderRadius: const BorderRadius.all(Radius.circular(10))
+        ),
+        child: Column(
+          children: [
+            Expanded(
+                child: Image(image: image.image)
+            ),
+            Text(widget.name),
+          ],
+        ),
       ),
-      child: Column(
-        children: [
-          Expanded(
-              child: Image(image: image.image)
-          ),
-          Text(widget.name),
-        ],
-      ),
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => DetailPage()
+            )
+        );
+      },
     );
   }
 
