@@ -131,7 +131,7 @@ class _PokemonItemState extends State<PokemonItem> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => DetailPage()
+                builder: (context) => DetailPage(pokemon: Pokemon(name: widget.name, url: widget.url),)
             )
         );
       },
